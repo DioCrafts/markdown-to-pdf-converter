@@ -28,17 +28,25 @@ def prepare(doc):
             pf.RawBlock(r'\usepackage{xcolor}', format="latex"),
             pf.RawBlock(r'\usepackage[a4paper, top=3cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}', format="latex"),
             pf.RawBlock(r"""
+% Define custom colors
+\definecolor{background}{RGB}{250, 251, 254}
+\definecolor{keyword}{RGB}{0, 0, 255}        % blue for keywords
+\definecolor{identifier}{RGB}{0, 0, 0}       % black for identifiers
+\definecolor{comment}{RGB}{58, 127, 179}     % blue-ish for comments
+\definecolor{string}{RGB}{163, 21, 21}       % dark red for strings
+\definecolor{border}{RGB}{230, 230, 230}     % light gray for border
+
 \lstset{
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    commentstyle=\color{gray},
-    stringstyle=\color{red},
+    basicstyle=\ttfamily\small\color{identifier},
+    keywordstyle=\color{keyword},
+    commentstyle=\itshape\color{comment},
+    stringstyle=\color{string},
     showstringspaces=false,
     breaklines=true,
     frame=single,
-    framerule=0.25pt,
-    rulecolor=\color{black},
-    backgroundcolor=\color{gray!5},
+    framerule=0.1pt,
+    rulecolor=\color{border},
+    backgroundcolor=\color{background},
     numbers=none,
     numberstyle=\tiny\color{gray},
     stepnumber=1,

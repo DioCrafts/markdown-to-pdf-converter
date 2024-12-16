@@ -26,6 +26,7 @@ def prepare(doc):
             pf.RawBlock(r'\usepackage{listings}', format="latex"),
             pf.RawBlock(r'\usepackage{capt-of}', format="latex"),
             pf.RawBlock(r'\usepackage{xcolor}', format="latex"),
+            pf.RawBlock(r'\usepackage[a4paper, top=3cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}', format="latex"),
             pf.RawBlock(r"""
 \lstset{
     basicstyle=\ttfamily\small,
@@ -47,7 +48,7 @@ def prepare(doc):
     framexleftmargin=5pt,
     framexrightmargin=5pt,
     framexbottommargin=4pt,
-    framextopmargin=4pt, 
+    framextopmargin=4pt,
     frameround=tttt,
     abovecaptionskip=25pt,
     captionpos=t,

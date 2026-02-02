@@ -176,7 +176,8 @@ def process_codeblocks(elem, doc):
 """
             return pf.RawBlock(latex_code, format="latex")
 
-        return elem
+        # For other formats (docx, html, etc.), let Pandoc handle code blocks natively
+        return None
 
 
 
@@ -374,10 +375,13 @@ def change_uri(elem, doc):
 
 def add_spacing_after_headers(elem, doc):
     """
-    Añade \vspace{5pt} después de los encabezados de nivel 4 (####).
+    Add \vspace{5pt} after level 4 headers (####).
+    Only applies to LaTeX/PDF output.
     """
     if isinstance(elem, pf.Header) and elem.level == 4:
-        return [elem, pf.RawBlock(r'\vspace{5pt}', format="latex")]
+        if doc.format in ['latex', 'pdf']:
+            return [elem, pf.RawBlock(r'\vspace{5pt}', format="latex")]
+    return None
 
 def main(doc=None):
     """Run the filters."""

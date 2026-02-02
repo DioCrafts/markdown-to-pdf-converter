@@ -2,7 +2,7 @@
 
 ## 🚀 Overview
 
-**Markdown to PDF Filter** is a **Pandoc** filter that converts **Markdown** files into **PDF** documents, with support for:
+**Markdown to PDF Filter** is a **Pandoc** filter that converts **Markdown** files into **PDF**, **DOCX**, and **HTML** documents, with support for:
 
 - 📝 **Code blocks**: Syntax highlighting using the LaTeX `listings` package.
 - 📊 **Mermaid diagrams**: Generates diagrams from Mermaid code.
@@ -67,8 +67,19 @@ Alice -> Bob: Hello Bob
 
 ### 2. Run Pandoc with the filter
 
+**Generate PDF:**
 ```bash
 pandoc -F ./markdown-to-pdf-convert.py -o output.pdf example.md
+```
+
+**Generate DOCX (Word):**
+```bash
+pandoc -F ./markdown-to-pdf-convert.py -o output.docx example.md
+```
+
+**Generate HTML:**
+```bash
+pandoc -F ./markdown-to-pdf-convert.py -o output.html example.md
 ```
 
 ### 3. Markdown file inclusion (mdinclude)

@@ -2,13 +2,13 @@
 
 ## 🚀 Overview
 
-**Markdown to PDF Filter** es un filtro para **Pandoc** que convierte archivos **Markdown** en documentos **PDF**, con soporte para:
+**Markdown to PDF Filter** is a **Pandoc** filter that converts **Markdown** files into **PDF** documents, with support for:
 
-- 📝 **Bloques de código**: Resaltado de sintaxis con el paquete `listings` de LaTeX.
-- 📊 **Diagramas Mermaid**: Genera diagramas a partir de código Mermaid.
-- 🌱 **Diagramas PlantUML**: Renderiza diagramas UML definidos con PlantUML.
+- 📝 **Code blocks**: Syntax highlighting using the LaTeX `listings` package.
+- 📊 **Mermaid diagrams**: Generates diagrams from Mermaid code.
+- 🌱 **PlantUML diagrams**: Renders UML diagrams defined with PlantUML.
 
-Perfecto para generar documentación técnica automatizada con un estilo profesional.
+Perfect for generating automated technical documentation with a professional style.
 
 ---
 
@@ -16,39 +16,39 @@ Perfecto para generar documentación técnica automatizada con un estilo profesi
 
 1. **Python** >= 3.8
 2. **Pandoc** >= 2.11
-3. **Mermaid CLI** (mmdc): [Instalación](https://github.com/mermaid-js/mermaid-cli)
-4. **PlantUML**: [Instalación](https://plantuml.com/starting)
-5. LaTeX: Necesario para generar el PDF (Ej. [TeX Live](https://tug.org/texlive/))
+3. **Mermaid CLI** (mmdc): [Installation](https://github.com/mermaid-js/mermaid-cli)
+4. **PlantUML**: [Installation](https://plantuml.com/starting)
+5. LaTeX: Required for PDF generation (e.g., [TeX Live](https://tug.org/texlive/))
 
 ---
 
 ## 🛠️ Installation
 
-Clona el repositorio y asegúrate de instalar los requisitos:
+Clone the repository and make sure to install the requirements:
 
 ```bash
 git clone https://github.com/yourusername/markdown-to-pdf-filter.git
 cd markdown-to-pdf-filter
-pip install panflute
+pip install -r requirements.txt
 ```
 
 ---
 
 ## 💡 Usage
 
-### 1. Estructura del archivo Markdown
+### 1. Markdown file structure
 
-Crea tu archivo Markdown (`example.md`) con bloques Mermaid y PlantUML:
+Create your Markdown file (`example.md`) with Mermaid and PlantUML blocks:
 
 ```markdown
-## Ejemplo de Código
+## Code Example
 
 \`\`\`python
 def hello_world():
     print("Hello, World!")
 \`\`\`
 
-### Ejemplo de Diagrama Mermaid
+### Mermaid Diagram Example
 
 \`\`\`mermaid
 graph TD
@@ -56,29 +56,54 @@ graph TD
     B --> C[End]
 \`\`\`
 
-### Ejemplo de PlantUML
+### PlantUML Example
 
 \`\`\`plantuml
 @startuml
-Alice -> Bob: Hola Bob
+Alice -> Bob: Hello Bob
 @enduml
 \`\`\`
 ```
 
-### 2. Ejecuta Pandoc con el filtro
+### 2. Run Pandoc with the filter
 
 ```bash
-pandoc -F ./pandoc_filter.py -o output.pdf example.md
+pandoc -F ./markdown-to-pdf-convert.py -o output.pdf example.md
 ```
+
+### 3. Markdown file inclusion (mdinclude)
+
+You can include other Markdown files within your document:
+
+\`\`\`mdinclude
+./docs/intro.md
+./docs/chapter1.md
+# This line is a comment and will be ignored
+Increase_headers=True
+./docs/appendix.md
+\`\`\`
+
+**Options:**
+- `Increase_headers=True`: Increases the header level of the included file
+- Lines starting with `#` are ignored as comments
+
+### 4. Code inclusion from files (codeblock-include)
+
+Include content from external files in a code block:
+
+\`\`\`codeblock-include
+./src/example.py
+./src/utils.py
+\`\`\`
 
 ---
 
 ## 🎨 Features
 
-- **Soporte completo para Mermaid** y **PlantUML**.
-- Formateo elegante de bloques de código usando LaTeX `listings`.
-- Espaciado automático entre títulos y bloques de código.
-- Configuración personalizable (colores, márgenes, grosor del borde).
+- **Full support for Mermaid** and **PlantUML**.
+- Elegant code block formatting using LaTeX `listings`.
+- Automatic spacing between headers and code blocks.
+- Customizable configuration (colors, margins, border thickness).
 
 ---
 
@@ -89,28 +114,28 @@ pandoc -F ./pandoc_filter.py -o output.pdf example.md
 - `mmdc` (Mermaid CLI)
 - `plantuml`
 
-Instalación rápida de Python dependencies:
+Quick Python dependencies installation:
 ```bash
-pip install panflute
+pip install -r requirements.txt
 ```
 
 ---
 
-## 🖼️ Ejemplo de salida
+## 🖼️ Output Example
 
-Ejecutar el filtro genera un **PDF** limpio y profesional con diagramas renderizados.
+Running the filter generates a **clean and professional PDF** with rendered diagrams.
 
 ---
 
 ## 🤝 Contributing
 
-¡Las contribuciones son bienvenidas! Abre un **issue** o envía un **pull request**.
+Contributions are welcome! Open an **issue** or submit a **pull request**.
 
 ---
 
 ## 📜 License
 
-Este proyecto está licenciado bajo **MIT License**.
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
 
 ---
 

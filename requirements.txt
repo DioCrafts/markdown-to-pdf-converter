@@ -1,0 +1,5 @@
+# Markdown to PDF Converter - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Pandoc filter library for Python
+panflute>=2.3.0

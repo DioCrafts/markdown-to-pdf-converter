@@ -88,7 +88,11 @@ def process_mermaid(elem, doc):
 
         # Generate the diagram
         cmd = [MERMAID_BIN, "-i", src, "-o", dest, "--scale", "4"]
-        subprocess.run(cmd, stdout=subprocess.PIPE)
+        try:
+            subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        except subprocess.CalledProcessError as e:
+            pf.debug(f'Error generating Mermaid diagram: {e}\n')
+            return None
 
         # Use the H option to prevent floating
         if doc.format in ['latex', 'pdf']:
@@ -196,11 +200,11 @@ def process_codeblockinclude(elem, doc):
                 try:
                     file_content = open(file_name, "r", encoding="utf-8")
                     concatinated_file_content = concatinated_file_content + file_content.read()
-                except:
-                    pf.debug('Error in reading ' + str(file_name) + '\n')
+                except (FileNotFoundError, IOError, PermissionError) as e:
+                    pf.debug(f'Error reading {file_name}: {e}\n')
 
         elem.text = concatinated_file_content
-    pass
+    return None
 
 
 def get_filename4code(module, content, ext=None):
@@ -219,6 +223,10 @@ def get_filename4code(module, content, ext=None):
 def get_extension(format, default, **alternates):
     """Get file extension for the result."""
     return alternates.get(format, default)
+
+
+# Global variable for tracking included file directory (used by change_uri)
+dirname_of_included_mdfile = "./"
 
 
 def process_mdinclude(elem, doc):
@@ -317,8 +325,8 @@ def convert_code_element_to_list_of_elements(elem, doc):
                         element.walk(change_uri, doc=None)
 
                     included_elements.extend(content_as_elements)
-                except:
-                    pf.debug('Error in reading ' + str(file_name) + '\n')
+                except (FileNotFoundError, IOError, PermissionError) as e:
+                    pf.debug(f'Error reading {file_name}: {e}\n')
 
         # User want to increase the header levels
         if increase_headers:
@@ -374,7 +382,14 @@ def add_spacing_after_headers(elem, doc):
 def main(doc=None):
     """Run the filters."""
     return pf.run_filters(
-        [process_codeblocks, process_mermaid, process_plantuml, add_spacing_after_headers],
+        [
+            process_mdinclude,
+            process_codeblockinclude,
+            process_codeblocks,
+            process_mermaid,
+            process_plantuml,
+            add_spacing_after_headers
+        ],
         prepare=prepare,
         finalize=finalize,
         doc=doc
